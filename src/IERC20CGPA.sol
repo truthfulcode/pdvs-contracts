@@ -3,24 +3,20 @@
 
 pragma solidity ^0.8.0;
 
+enum UserType {
+        NONE, STUDENT, CM
+    }
 /**
  * @dev Interface extending from the ERC20 standard which serves the use case of university voting system.
  */
  
 interface IERC20CGPA {
+    
     struct UserData {
         // tightly packed within 32 bytes slot
         uint248 balance;
-        uint8 userType; // used instead of enum for flexibility
+        UserType userType; // used instead of enum for flexibility
     }
-
-  /**
-     * @dev Emitted when `value` tokens are moved from one account (`from`) to
-     * another (`to`).
-     *
-     * Note that `value` may be zero.
-     */
-    event Transfer(address indexed from, address indexed to, uint256 value);
 
     /**
      * @dev Emitted when a new strategy has been set
@@ -42,11 +38,12 @@ interface IERC20CGPA {
      */
     function cgpa(address account) external view returns (uint256);
 
-    function userType(address account) external view returns (uint8);
+    function userType(address account) external view returns (UserType);
     /**
      * @dev Returns the strategy address.
      */
     function strategy() external view returns (address);
 
     function maxPerUser() external view returns(uint256);
+
 }

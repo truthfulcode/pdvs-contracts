@@ -12,7 +12,7 @@ contract VotingStrategy is IVotingStrategy {
     uint immutable MAX_PER_USER;
     
     constructor (ERC20CGPA _token) {
-        uint _maxPerUser = ERC20CGPA.maxPerUser();
+        uint _maxPerUser = _token.maxPerUser();
         MAX_PER_USER = _maxPerUser;
         MID_RANGE = _maxPerUser / 2;
     }
@@ -24,8 +24,7 @@ contract VotingStrategy is IVotingStrategy {
             votingPower = value * 500;
         } else if (value <= MAX_PER_USER){
             // to be implemented and maintain 2 decimal point precision
-            // TODO implement an exponential curve
-            votingPower = value * 1000;
+
             // votingPower = 0;
         } else {
             revert InvalidValue();
