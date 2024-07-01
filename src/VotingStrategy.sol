@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.0;
 
 import "./ERC20CGPA.sol";
 import "./VotingToken.sol";

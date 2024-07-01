@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.0;
 
 import {UserType} from "./IERC20CGPA.sol";
 import "./ERC20CGPA.sol";
