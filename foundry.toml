@@ -9,3 +9,8 @@ remappings = [
 ]
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+[rpc_endpoints]
+bsc-testnet= "${BSCTEST_RPC_URL}"
+
+[etherscan]
+bsc-testnet = { key = "${BSCSCAN_API_KEY}", url = "https://api-testnet.bscscan.com/api" }

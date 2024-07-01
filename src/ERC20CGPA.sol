@@ -65,7 +65,7 @@ contract ERC20CGPA is Context, IERC20CGPA, IERC20Metadata {
         _userData[_account].userType = _userType;
     }
 
-    function _validUserType(address _account) private {
+    function _validUserType(address _account) private view {
         require(_userData[_account].userType != UserType.NONE, "Invalid User Type");
     }
 
@@ -204,19 +204,19 @@ contract ERC20CGPA is Context, IERC20CGPA, IERC20Metadata {
 
     // disabled functionalities:
 
-    function transfer(address to, uint256 amount) external returns (bool) {
+    function transfer(address to, uint256 amount) external pure returns (bool) {
         require(false, "disabled");
     }
 
-    function allowance(address owner, address spender) external view returns (uint256) {
+    function allowance(address owner, address spender) external pure returns (uint256) {
         return 0;
     }
 
-    function approve(address spender, uint256 amount) external returns (bool) {
+    function approve(address spender, uint256 amount) external pure returns (bool) {
         require(false, "disabled");
     }
     
-    function transferFrom(address from, address to, uint256 amount) external returns (bool) {
+    function transferFrom(address from, address to, uint256 amount) external pure returns (bool) {
         require(false, "disabled");
     }
 }

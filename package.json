@@ -1,5 +1,11 @@
 {
   "name": "project",
+  "scripts": {
+    "localhost": "anvil --rpc-url bsc-testnet --fork-chain-id 1337",
+    "deploy": "forge script DeployScript --broadcast --rpc-url http://127.0.0.1:8545",
+    "deploy-tbsc": "forge script DeployScript --broadcast --rpc-url bsc-testnet",
+    "deploy-strategy-tbsc": "forge script DeployStrategy --broadcast --rpc-url bsc-testnet"
+  },
   "devDependencies": {
     "hardhat": "^2.14.1",
     "typescript": "^5.1.3"

@@ -23,7 +23,6 @@ contract VotingToken is ERC20CGPA, AccessControl {
         _setRoleAdmin(MINT_BURN_ROLE, DEFAULT_ADMIN_ROLE);
 
         _admin = _admin;
-        votingStrategy = new VotingStrategy(ERC20CGPA(address(this)));
     }
 
     error EXCEEDED_MAX_PER_USER();
@@ -35,6 +34,23 @@ contract VotingToken is ERC20CGPA, AccessControl {
         return votingStrategy.getVotingPower(super.balanceOf(_account));
     }
 
+    function adjust(address _user, uint _amount, UserType _userType) public onlyRole(MINT_BURN_ROLE) {
+        uint _balance = super.balanceOf(_user);
+        if(_amount + _balance > MAX_PER_USER) revert EXCEEDED_MAX_PER_USER();
+        if(_userType == UserType.NONE) revert USERTYPE_NONE();
+
+        _setUserType(_user, _userType);
+
+        uint _diff;
+        if(_amount > _balance) {
+            _diff = _amount - _balance;
+            _mint(_user, _diff);
+        } else if(_amount < _balance) {
+            _diff = _balance - _amount;
+            burn(_user, _diff);
+        }
+    }
+
     function mint(address _user, uint _amount, UserType _userType) public onlyRole(MINT_BURN_ROLE) {
         if(_amount + super.balanceOf(_user) > MAX_PER_USER) revert EXCEEDED_MAX_PER_USER();
         if(_userType == UserType.NONE) revert USERTYPE_NONE();
@@ -44,12 +60,13 @@ contract VotingToken is ERC20CGPA, AccessControl {
     }
 
     function burn(address user, uint amount) public onlyRole(MINT_BURN_ROLE) {
-        if(balanceOf(user) == amount) _setUserType(user, UserType.NONE);
+        if(super.balanceOf(user) == amount) _setUserType(user, UserType.NONE);
         _burn(user,amount);
     }
 
+
     function revoke(address _user) external onlyRole(MINT_BURN_ROLE){
-        uint _balance = balanceOf(_user);
+        uint _balance = super.balanceOf(_user);
         if (_balance == 0) revert EMPTY_BALANCE();
         _setUserType(_user, UserType.NONE);
         _burn(_user, _balance);
