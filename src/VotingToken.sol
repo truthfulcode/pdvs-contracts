@@ -15,8 +15,6 @@ contract VotingToken is ERC20CGPA, AccessControl {
 
     IVotingStrategy public votingStrategy;
 
-    // mapping (address => UserType) public userType;
-
     constructor(address _admin, address _keeper) ERC20CGPA("Student Voting Power", "SVP", 4) {
         _grantRole(DEFAULT_ADMIN_ROLE, _admin);
         _grantRole(MINT_BURN_ROLE, _keeper);
